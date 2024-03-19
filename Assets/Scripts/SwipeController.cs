@@ -1,49 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class SwipeController : MonoBehaviour
+public class swipeController : MonoBehaviour
 {
-    [SerializeField] RectTransform content;
-    [SerializeField] Button nextButton;
-    [SerializeField] Button prevButton;
-    [SerializeField] float swipeSpeed = 5f;
+ [SerializeField] int maxPage;
+ int currentPage;
+ Vector3 targetPos;
+ [SerializeField] Vector3 pageStep;
+ [SerializeField] RectTransform levelPagesRect;
+ [SerializeField] float tweenTime;
+ [SerializeField]LeanTweenType tweenType;
 
-    private int currentPageIndex = 0;
-    private Vector2 targetPosition;
+private void Awake(){
+    currentPage=1;
+    targetPos=levelPagesRect.localPosition;
 
-    void Start()
-    {
-        UpdateButtonInteractivity();
+}
+ public void Next(){
+    if (currentPage < maxPage){
+        currentPage ++;
+        targetPos += pageStep;
+        MovePage();
     }
 
-    void UpdateButtonInteractivity()
-    {
-        nextButton.interactable = currentPageIndex < content.childCount - 1;
-        prevButton.interactable = currentPageIndex > 0;
+ }
+ public void Previous(){
+  if (currentPage > 1){
+        currentPage --;
+        targetPos -= pageStep;
+        MovePage();
     }
+ }
+ void MovePage(){
+    levelPagesRect.LeanMoveLocal(targetPos,tweenTime).setEase(tweenType);
+ }
 
-    public void NextPage()
-    {
-        if (currentPageIndex < content.childCount - 1)
-        {
-            currentPageIndex++;
-            targetPosition = new Vector2(-currentPageIndex * content.rect.width, content.anchoredPosition.y);
-            UpdateButtonInteractivity();
-        }
-    }
-
-    public void PreviousPage()
-    {
-        if (currentPageIndex > 0)
-        {
-            currentPageIndex--;
-            targetPosition = new Vector2(-currentPageIndex * content.rect.width, content.anchoredPosition.y);
-            UpdateButtonInteractivity();
-        }
-    }
-
-    void Update()
-    {
-        content.anchoredPosition = Vector2.Lerp(content.anchoredPosition, targetPosition, swipeSpeed * Time.deltaTime);
-    }
 }

@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 4409628524e5ad2478c0ebe81205136b
   - enabled: 1
-    path: Assets/Scenes/FrutasyVerduras.unity
+    path: Assets/Scenes/Frutas.unity
     guid: 9afacb1cf3fcaa04fa705932de36ad65
+  - enabled: 1
+    path: Assets/Scenes/Verduras.unity
+    guid: ef35f6c36700ec843b52055915c30bb6
+  - enabled: 1
+    path: "Assets/Scenes/Panader\xEDa.unity"
+    guid: 63ef03d59772018478f93daf91c07381
   m_configObjects: {}
