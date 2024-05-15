@@ -4,19 +4,15 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
-
-public class RecuperarLista : MonoBehaviour
+public class CogerProducto : MonoBehaviour
 {
-    public TextMeshProUGUI lista;
-     [SerializeField] Image win;
-    //[SerializeField] string productoSeleccionado;
     string finalList;
+    public TextMeshProUGUI lista;
+    // Start is called before the first frame update
     void Start()
     {
-        lista.text=StaticData.valueToKeep;
-
+         lista.text=StaticData.valueToKeep;
     }
-
    public void seleccionarProducto(string productoSeleccionado){
 
      if(StaticData.valueToKeep.Contains(productoSeleccionado)){
@@ -24,10 +20,7 @@ public class RecuperarLista : MonoBehaviour
             lista.text=finalList;
             StaticData.valueToKeep=finalList;
             StaticData.cont--;
-            if (StaticData.cont<=0){
-              win.gameObject.SetActive(true);
-            
-            }
+           
             }
    }
 }

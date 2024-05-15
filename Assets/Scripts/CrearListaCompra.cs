@@ -9,47 +9,92 @@ using Unity.VisualScripting;
 
 public class CrearListaCompra : MonoBehaviour
 {
-    
-    [SerializeField] int count =4;
-    public TextMeshProUGUI lista;
-    String finalList;
 
-//lista con todos los posibles productos
-  public List<string> Productos=new List<string>{"tomates","leche","pan","yogures","manzanas"};
-//funcion para generar lista con productos aleatorios
- public List<T> GetProductos<T>(List<T> inputList,int count)// metemos lista de posibles productos y numero de productos que queremos en la lista nueva
-  
+   int nProductos ;
+  public TextMeshProUGUI lista;
+  String finalList;
+  String listaseleccionada;
+
+  List<string> Productos = new List<string>();
+  public Button[] botones; // Array de botones 
+
+
+
+  public List<T> GetProductos<T>(List<T> inputList, int count)
   {
     List<T> outputList = new List<T>();
-    for (int i=0;i<count;i++)
+    for (int i = 0; i < count; i++)
     {
-      
-        int index = UnityEngine.Random.Range(0, inputList.Count);
-        outputList.Add(inputList[index]);
-        Productos.RemoveAt(index);
+
+      int index = UnityEngine.Random.Range(0, inputList.Count);
+      outputList.Add(inputList[index]);
+      Productos.RemoveAt(index);
     }
-    
+
     return outputList;
   }
+
+  void Awake()
+  {
+    finalList = StaticData.valueToKeep;
+    listaseleccionada = StaticData.ListaSeleccionable;
+    nProductos = StaticData.numeroProductos;
+    foreach (Button boton in botones)
+    {
+      // Obtener el nombre del botón y agregarlo a la lista de nombres
+      Productos.Add(boton.name);
+    }
   
- void Awake(){
-  finalList=StaticData.valueToKeep;
-  //finalList=PlayerPrefs.GetString("Productos");
-  if (finalList==null){
-  List<String> listaCompra=GetProductos(Productos, count);
-        for (int i =0;i<listaCompra.Count;i++){
-          if (i==0){
-            finalList=listaCompra[0];
-          }else{
-          finalList= new String(finalList + Environment.NewLine +listaCompra[i]);}
-          StaticData.valueToKeep=finalList;
-          //PlayerPrefs.SetString("Productos",finalList);
-          
-         
+    StaticData.botones=botones;
+    if (nProductos <= 0)
+    {
+      nProductos = 4;
+    }
+    if (finalList == null && listaseleccionada == null)
+    {
+      List<String> listaCompra = GetProductos(Productos, nProductos);
+      for (int i = 0; i < listaCompra.Count; i++)
+      {
+        if (i == 0)
+        {
+          finalList = listaCompra[0];
         }
+        else
+        {
+          finalList = new String(finalList + Environment.NewLine + listaCompra[i]);
+        }
+        StaticData.valueToKeep = finalList;
+        StaticData.cont = nProductos;
+
+
+
+      }
+    }
+    else if (listaseleccionada != null)
+    {
+      StaticData.valueToKeep = listaseleccionada;
+      StaticData.ListaSeleccionable = null;
+      lista.text = listaseleccionada;
+    }
+    lista.text = finalList;
+
+
   }
-    lista.text=finalList;
-    
-    
- }
+  public void seleccionarProducto(string productoSeleccionado)
+  {
+    if (StaticData.valueToKeep.Contains(productoSeleccionado))
+    {
+
+      finalList = new String(StaticData.valueToKeep.Replace(productoSeleccionado, "<s>" + productoSeleccionado + "</s>"));
+      lista.text = finalList;
+      StaticData.valueToKeep = finalList;
+      StaticData.cont--;
+
+    }
+    else
+    {
+      Debug.Log("error");
+    }
+  }
+
 }

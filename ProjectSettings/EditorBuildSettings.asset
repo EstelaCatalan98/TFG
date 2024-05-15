@@ -9,15 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Editor.unity
+    guid: 19a95e199ba97ab419932ca4fa66e43a
+  - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 4409628524e5ad2478c0ebe81205136b
   - enabled: 1
     path: Assets/Scenes/Frutas.unity
-    guid: 9afacb1cf3fcaa04fa705932de36ad65
+    guid: 42aa547bd27da60428c34be50a837071
   - enabled: 1
     path: Assets/Scenes/Verduras.unity
     guid: ef35f6c36700ec843b52055915c30bb6
   - enabled: 1
-    path: "Assets/Scenes/Panader\xEDa.unity"
-    guid: 63ef03d59772018478f93daf91c07381
+    path: Assets/Scenes/Lacteos.unity
+    guid: e7190cf3dc7bdeb4bb80c13a2b18736e
+  - enabled: 1
+    path: Assets/Scenes/Panaderia.unity
+    guid: b730381820cd309429d734a4dffb770a
   m_configObjects: {}
