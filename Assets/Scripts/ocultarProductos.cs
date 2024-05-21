@@ -6,7 +6,7 @@ using System;
 public class OcultarProductos : MonoBehaviour
 {
     public Button[] botones; 
-    public int cantidadBotonesAleatorios = 3; // Número de botones aleatorios a mostrar al inicio
+    public int cantidadBotonesAleatorios =StaticData.numeroDistracciones; // Número de botones aleatorios a mostrar al inicio
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class OcultarProductos : MonoBehaviour
     void MostrarBotonesAleatorios()
     {
         // Obtener los botones a mantener
-        string botonesAMantener = StaticData.valueToKeep;
+        string botonesAMantener = StaticData.listaDef;
        
         
 

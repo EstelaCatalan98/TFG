@@ -13,16 +13,16 @@ public class RecuperarLista : MonoBehaviour
     string finalList;
     void Start()
     {
-        lista.text=StaticData.valueToKeep;
+        lista.text=StaticData.listaDef;
 
     }
 
    public void seleccionarProducto(string productoSeleccionado){
 
-     if(StaticData.valueToKeep.Contains(productoSeleccionado)){
-            finalList=new String(StaticData.valueToKeep.Replace(productoSeleccionado,"<s>"+productoSeleccionado+"</s>"));
+     if(StaticData.listaDef.Contains(productoSeleccionado)){
+            finalList=new String(StaticData.listaDef.Replace(productoSeleccionado,"<s>"+productoSeleccionado+"</s>"));
             lista.text=finalList;
-            StaticData.valueToKeep=finalList;
+            StaticData.listaDef=finalList;
             StaticData.cont--;
             if (StaticData.cont<=0){
               win.gameObject.SetActive(true);
