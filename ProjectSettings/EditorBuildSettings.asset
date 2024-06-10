@@ -15,15 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 4409628524e5ad2478c0ebe81205136b
   - enabled: 1
-    path: Assets/Scenes/Frutas.unity
-    guid: 42aa547bd27da60428c34be50a837071
-  - enabled: 1
-    path: Assets/Scenes/Verduras.unity
-    guid: ef35f6c36700ec843b52055915c30bb6
-  - enabled: 1
-    path: Assets/Scenes/Lacteos.unity
-    guid: e7190cf3dc7bdeb4bb80c13a2b18736e
-  - enabled: 1
-    path: Assets/Scenes/Panaderia.unity
-    guid: b730381820cd309429d734a4dffb770a
+    path: Assets/Scenes/Win.unity
+    guid: 2dc73c7dcfbf1c743980b56712d838b5
   m_configObjects: {}
