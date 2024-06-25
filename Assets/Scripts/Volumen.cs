@@ -1,24 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Volumen : MonoBehaviour
 {
-   public Slider slider;
-   public float slidervalue;
-   public Image imagenMute;
-   void  Start(){
-    slider.value= PlayerPrefs.GetFloat("volumenAudio", 0.5f);
-    AudioListener.volume =slidervalue;
-    RevisarSiEstoyMute();
-   }
-   public void RevisarSiEstoyMute(){
-    if(slidervalue==0){
-        imagenMute.enabled=true;
+    [SerializeField] Slider slider;
+    void Start()
+    {
+        if (PlayerPrefs.HasKey("musicvolume"))
+        {
+            PlayerPrefs.SetFloat("musicvolume", 1);
+            Load();
+        }
+        else
+        {
+            Load();
+        }
     }
-    else{
-        imagenMute.enabled=false;
+    public void ChangeVolume()
+    {
+        AudioListener.volume = slider.value;
+        Save();
+
     }
-   }   
+    public void Load()
+    {
+        slider.value = PlayerPrefs.GetFloat("musicvolume");
+    }
+    public void Save()
+    {
+        PlayerPrefs.SetFloat("musicvolume", slider.value);
+
+    }
 }

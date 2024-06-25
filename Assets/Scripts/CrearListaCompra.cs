@@ -8,21 +8,25 @@ using UnityEngine.Purchasing;
 using Unity.VisualScripting;
 using UnityEngine.Purchasing.MiniJSON;
 using UnityEngine.SceneManagement;
+using System.Drawing;
+
 
 
 public class CrearListaCompra : MonoBehaviour
 {
+  [SerializeField]private Image xImage; // La imagen de "X" que vamos a superponer
+  [SerializeField]private Camera mainCamera;
   List<string> Productos = new List<string>();
   Dictionary<string, int> listaseleccionada;
   int nProductos;
   public TextMeshProUGUI lista;
   public TextMeshProUGUI textoAviso;
   public Button[] botones; // Array de botones  
-  public AudioSource audioSource;
+  private AudioSource audioSource;
   public TextMeshProUGUI messageText; // Texto de mensaje en la UI
   public AudioClip successSound; // Sonido de éxito
-  public AudioClip softBellSound; // Sonido suave de campana
- 
+  public AudioClip softBellSound; // Sonido error
+
   public Image backgroundImage;
 
   public List<T> GetProductos<T>(List<T> inputList, int count)
@@ -38,7 +42,7 @@ public class CrearListaCompra : MonoBehaviour
 
     return outputList;
   }
-  
+
   public int getCantidad()
   {
     return UnityEngine.Random.Range(1, 5);
@@ -64,6 +68,7 @@ public class CrearListaCompra : MonoBehaviour
         if (productName.Equals(productoSeleccionado, System.StringComparison.OrdinalIgnoreCase))
         {
           productoEncontrado = true; // Marcar que el producto ha sido encontrado en la lista
+          PlaySound(successSound);
 
           string numberPart = parts[1].Trim();
 
@@ -78,6 +83,7 @@ public class CrearListaCompra : MonoBehaviour
             {
               parts[0] = $"<s>{productName} x {number}</s>";
               line = parts[0];
+              TacharYDesactivarBoton(productName);
             }
             else
             {
@@ -86,7 +92,7 @@ public class CrearListaCompra : MonoBehaviour
               line = $"{parts[0]} x {number}";
             }
 
-            
+
           }
         }
         else if (!productName.StartsWith("<s>")) // Si el producto no coincide y no está tachado
@@ -132,6 +138,7 @@ public class CrearListaCompra : MonoBehaviour
     // Mostrar un aviso si el producto seleccionado no se encuentra en la lista
     if (!productoEncontrado)
     {
+      PlaySound(softBellSound);
       StartCoroutine(ShowMessageTemporarily("Casi lo logras, inténtalo nuevamente.", 3f));
       Debug.Log("El producto seleccionado no se encuentra en la lista.");
 
@@ -159,7 +166,7 @@ public class CrearListaCompra : MonoBehaviour
   {
 
     DisplayMessage(message);
-    Debug.Log("he llamado a display");
+
     yield return new WaitForSeconds(delay);
     ClearMessage();
   }
@@ -190,12 +197,14 @@ public class CrearListaCompra : MonoBehaviour
   }
   void EndGame()
   {
-    
-    SceneManager.LoadScene("win");
-   
 
-  
+    SceneManager.LoadScene("win");
+
+
+
   }
+
+
   void AdjustBackgroundSize()
   {
     // Ajustar el tamaño del fondo según el tamaño del texto
@@ -213,11 +222,44 @@ public class CrearListaCompra : MonoBehaviour
   {
     DisplayMessage(""); // Limpia el mensaje y oculta el fondo
   }
+  public void TacharYDesactivarBoton(string nombreBoton)
+  {
+    foreach (Button boton in botones)
+    {
+      if (boton.name == nombreBoton)
+      {
+        // Obtener el componente de Image adicional (la imagen de "X")
+        Image[] imagenes = boton.GetComponentsInChildren<Image>();
+        Image imagenX = null;
+        foreach (var img in imagenes)
+        {
+          if (img.gameObject != boton.gameObject) // Excluimos la imagen principal del botón
+          {
+            imagenX = img;
+            break;
+          }
+        }
+
+        if (imagenX != null)
+        {
+          // Superponer la imagen de "X"
+          imagenX.enabled = true;
+        }
+
+        // Desactivar el botón
+        boton.interactable = false;
+
+        break;
+      }
+    }
+  }
+
 
   void Awake()
   {
     DisplayMessage("");
     StartCoroutine(ShowMessageTemporarily("Selecciona los productos de la lista.", 3f));
+    audioSource = Camera.main.GetComponent<AudioSource>();
 
     listaseleccionada = new Dictionary<string, int>(StaticData.listaEditor);
     nProductos = StaticData.numeroProductos;
@@ -230,13 +272,13 @@ public class CrearListaCompra : MonoBehaviour
     }
     StaticData.botones = botones;
     StaticData.productos = Productos;
-   
+
 
     if (listaseleccionada.Count == 0)
     {
 
       //cogemos nproductos aleatorios
-      listaseleccionada=new Dictionary<string, int>();
+      listaseleccionada = new Dictionary<string, int>();
       StaticData.listaEditor = new Dictionary<string, int>();
 
       List<String> listaCompra = GetProductos(Productos, nProductos);
@@ -256,7 +298,7 @@ public class CrearListaCompra : MonoBehaviour
           Productos.Remove(kvp.Key);
         }
       }
-    
+
       //cogemos nproductos aleatorios
       lista = GetProductos(Productos, nProductos);
       for (int i = 0; i < lista.Count; i++)
@@ -272,12 +314,13 @@ public class CrearListaCompra : MonoBehaviour
       texto += kvp.Key + " x " + kvp.Value + "\n";
     }
     lista.text = texto;
-    
+
     StaticData.listaDef = texto;
-    Productos=StaticData.productos;
-    
-    
+    Productos = StaticData.productos;
+
+
   }
+
 
 
 }
