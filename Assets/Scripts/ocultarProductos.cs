@@ -6,10 +6,13 @@ using System;
 public class OcultarProductos : MonoBehaviour
 {
     public Button[] botones; 
-    public int cantidadBotonesAleatorios =StaticData.numeroDistracciones; // Número de botones aleatorios a mostrar al inicio
+    public int cantidadBotonesAleatorios ; // Número de botones aleatorios a mostrar al inicio
 
     void Start()
     {
+        cantidadBotonesAleatorios=StaticData.numeroDistracciones;
+        Debug.Log("numero de distracciones:"+cantidadBotonesAleatorios);
+        Debug.Log("numero de distracciones static data :"+StaticData.numeroDistracciones);
         foreach (Button boton in botones){
             Debug.Log(boton.gameObject);
 

@@ -272,6 +272,9 @@ public class CrearListaCompra : MonoBehaviour
     audioSource = Camera.main.GetComponent<AudioSource>();
     listaseleccionada = new Dictionary<string, int>(StaticData.listaEditor);
     nProductos = StaticData.numeroProductos;
+    Debug.Log("nproductos"+nProductos);
+    
+    
     string texto = "";
     Productos.Clear();
     foreach (Button boton in botones)
