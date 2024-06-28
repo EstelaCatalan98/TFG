@@ -10,6 +10,10 @@ public class OcultarProductos : MonoBehaviour
 
     void Start()
     {
+        foreach (Button boton in botones){
+            Debug.Log(boton.gameObject);
+
+        }
         botones=StaticData.botones;//aqui estan todos los productos(botones)
         OcultarBotones(); // Ocultar todos los botones al inicio del juego
         MostrarBotonesAleatorios(); // Mostrar botones aleatorios después de ocultar todos

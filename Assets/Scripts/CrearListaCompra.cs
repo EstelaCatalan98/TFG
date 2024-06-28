@@ -26,6 +26,8 @@ public class CrearListaCompra : MonoBehaviour
   public TextMeshProUGUI messageText; // Texto de mensaje en la UI
   public AudioClip successSound; // Sonido de éxito
   public AudioClip softBellSound; // Sonido error
+  int contFallos=0;
+    int contAciertos=0;
 
   public Image backgroundImage;
 
@@ -50,6 +52,7 @@ public class CrearListaCompra : MonoBehaviour
 
   public void seleccionarProducto(string productoSeleccionado)
   {
+    
     // Divide el texto en líneas, eliminando posibles espacios en blanco alrededor
     string[] lines = StaticData.listaDef.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
     string newText = "";
@@ -69,6 +72,7 @@ public class CrearListaCompra : MonoBehaviour
         {
           productoEncontrado = true; // Marcar que el producto ha sido encontrado en la lista
           PlaySound(successSound);
+          contAciertos ++;
 
           string numberPart = parts[1].Trim();
 
@@ -141,6 +145,8 @@ public class CrearListaCompra : MonoBehaviour
       PlaySound(softBellSound);
       StartCoroutine(ShowMessageTemporarily("Casi lo logras, inténtalo nuevamente.", 3f));
       Debug.Log("El producto seleccionado no se encuentra en la lista.");
+      contFallos++;
+      
 
     }
 
@@ -157,6 +163,8 @@ public class CrearListaCompra : MonoBehaviour
   {
     // Aquí puedes mostrar una ventana de final de juego, por ejemplo:
     Debug.Log("¡Fin del juego! Todos los productos han sido agotados o tachados.");
+    PlayerPrefs.SetInt("Aciertos",contAciertos);
+    PlayerPrefs.SetInt("Fallos",contFallos);
     EndGame();
     // Aquí puedes llamar a una función que muestre la ventana final de juego, o ejecutar cualquier otra lógica de finalización de juego.
   }
@@ -257,10 +265,11 @@ public class CrearListaCompra : MonoBehaviour
 
   void Awake()
   {
+    if(PlayerPrefs.HasKey("musicvolume")){
+    AudioListener.volume=PlayerPrefs.GetFloat("musicvolume");}
     DisplayMessage("");
     StartCoroutine(ShowMessageTemporarily("Selecciona los productos de la lista.", 3f));
     audioSource = Camera.main.GetComponent<AudioSource>();
-
     listaseleccionada = new Dictionary<string, int>(StaticData.listaEditor);
     nProductos = StaticData.numeroProductos;
     string texto = "";
