@@ -7,15 +7,7 @@ public class Volumen : MonoBehaviour
 
     void Start()
     {
-        if (PlayerPrefs.HasKey("musicvolume"))
-        {
-            Load();
-        }
-        else
-        {
-            // Aquí podrías establecer un valor por defecto si lo deseas
-            // slider.value = 1.0f; // Por ejemplo, establece un valor por defecto
-        }
+        Load();
     }
 
     public void ChangeVolume()
@@ -26,11 +18,17 @@ public class Volumen : MonoBehaviour
 
     public void Load()
     {
-        slider.value = PlayerPrefs.GetFloat("musicvolume");
+        if (PlayerPrefs.HasKey("musicvolume"))
+        {
+            float savedVolume = PlayerPrefs.GetFloat("musicvolume");
+            slider.value = savedVolume;
+            AudioListener.volume = savedVolume; // Asegúrate de que el volumen del AudioListener se actualice también
+        }
     }
 
     public void Save()
     {
         PlayerPrefs.SetFloat("musicvolume", slider.value);
+        PlayerPrefs.Save(); // Asegúrate de guardar los PlayerPrefs inmediatamente
     }
 }

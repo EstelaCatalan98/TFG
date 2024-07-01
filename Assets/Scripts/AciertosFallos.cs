@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System;
+
 
 public class AciertosFallos : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class AciertosFallos : MonoBehaviour
         int fallo=PlayerPrefs.GetInt("Fallos");
         aciertos.text=acierto.ToString();
         fallos.text=fallo.ToString();
+        
         
     }
 

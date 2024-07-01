@@ -27,7 +27,7 @@ public class CrearListaCompra : MonoBehaviour
   public AudioClip successSound; // Sonido de éxito
   public AudioClip softBellSound; // Sonido error
   int contFallos=0;
-    int contAciertos=0;
+  int contAciertos=0;
 
   public Image backgroundImage;
 
@@ -161,12 +161,10 @@ public class CrearListaCompra : MonoBehaviour
 
   void MostrarVentanaFinal()
   {
-    // Aquí puedes mostrar una ventana de final de juego, por ejemplo:
+   
     Debug.Log("¡Fin del juego! Todos los productos han sido agotados o tachados.");
-    PlayerPrefs.SetInt("Aciertos",contAciertos);
-    PlayerPrefs.SetInt("Fallos",contFallos);
     EndGame();
-    // Aquí puedes llamar a una función que muestre la ventana final de juego, o ejecutar cualquier otra lógica de finalización de juego.
+   
   }
 
 
@@ -205,7 +203,7 @@ public class CrearListaCompra : MonoBehaviour
   }
   void EndGame()
   {
-
+    GuardarPartida();
     SceneManager.LoadScene("win");
 
 
@@ -332,6 +330,30 @@ public class CrearListaCompra : MonoBehaviour
 
 
   }
+  public void GuardarPartida()
+{
+    PlayerPrefs.SetInt("Aciertos", contAciertos);
+    PlayerPrefs.SetInt("Fallos", contFallos);
+    RegistrarPartida(contAciertos,contFallos);
+
+    //PlayerPrefs.Save();
+
+    
+}
+ public void RegistrarPartida( int aciertos, int fallos)
+    {
+        int numPartidas = PlayerPrefs.GetInt("NumeroPartidas", 0);
+
+        PlayerPrefs.SetString($"Partida_{numPartidas}_Fecha", DateTime.Now.ToString());
+        PlayerPrefs.SetInt($"Partida_{numPartidas}_Aciertos", aciertos);
+        PlayerPrefs.SetInt($"Partida_{numPartidas}_Fallos", fallos);
+
+        numPartidas++;
+        PlayerPrefs.SetInt("NumeroPartidas", numPartidas);
+
+        PlayerPrefs.Save();
+    }
+
 
 
 

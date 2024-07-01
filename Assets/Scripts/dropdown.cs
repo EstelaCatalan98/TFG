@@ -10,18 +10,21 @@ public class ListaDeCompra : MonoBehaviour
     [SerializeField] private TMP_InputField nproductos;
     [SerializeField] private TMP_InputField ndistracciones;
     [SerializeField] private TMP_Text lista;
-    [SerializeField] private Button botonEliminarPrefab; // Referencia al prefab del botón eliminar
-    [SerializeField] private Transform contenedorLista; // Contenedor donde se agregan los elementos de la lista
+    [SerializeField] private GameObject panel;
+    [SerializeField] private GameObject prefab;
+    private List<GameObject> instantiatedPrefabs = new List<GameObject>();
+   
 
     private Dictionary<string, int> productoCantidad = new Dictionary<string, int>();
 
     void Start()
     {
-        cantidad.contentType = TMP_InputField.ContentType.IntegerNumber;
+    cantidad.contentType = TMP_InputField.ContentType.IntegerNumber;
     nproductos.contentType = TMP_InputField.ContentType.IntegerNumber;
     ndistracciones.contentType = TMP_InputField.ContentType.IntegerNumber;
+        
         CargarDatos();
-        ActualizarLista();
+        //ActualizarLista();
     }
 
     public void Agregar()
@@ -44,20 +47,15 @@ public class ListaDeCompra : MonoBehaviour
         {
             productoCantidad.Add(producto, cantidadProducto);
         }
+        prefab=Instantiate(prefab, panel.transform);
+           
+            prefab.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
+            instantiatedPrefabs.Add(prefab);
 
-        ActualizarLista();
+        //ActualizarLista();
     }
 
-    public void ActualizarLista()
-    {
-        lista.text = ""; // Limpiar la lista antes de actualizarla
-
-        foreach (var kvp in productoCantidad)
-        {
-            lista.text += kvp.Key + " x" + kvp.Value + "  "; // Mostrar el producto y su cantidad
-            lista.text += "\n"; // Nueva línea para el siguiente elemento
-        }
-    }
+   
 
     public void guardar()
     {
@@ -113,9 +111,15 @@ public class ListaDeCompra : MonoBehaviour
             string producto = option.text;
             if (PlayerPrefs.HasKey(producto))
             {
+                
                 int cantidadProducto = PlayerPrefs.GetInt(producto);
                 productoCantidad[producto] = cantidadProducto;
+                prefab=Instantiate(prefab, panel.transform);
+                prefab.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
+                instantiatedPrefabs.Add(prefab);
+               
             }
+            
         }
     }
 
@@ -127,27 +131,21 @@ public class ListaDeCompra : MonoBehaviour
         StaticData.numeroProductos = 4;
         StaticData.numeroDistracciones = 2;
 
-        // Actualizar campos de entrada y texto de la lista
-        nproductos.text = "4";
-        ndistracciones.text = "2";
-        ActualizarLista();
-    }
-
-    public void EliminarProducto()
+        foreach (GameObject instanciaPrefab in instantiatedPrefabs)
     {
-        string producto = elegirProducto.options[elegirProducto.value].text;
-
-        if (productoCantidad.ContainsKey(producto))
+        if (instanciaPrefab != null)
         {
-            productoCantidad.Remove(producto);
-            PlayerPrefs.DeleteKey(producto);
-            ActualizarLista();
-        }
-        else
-        {
-            Debug.LogWarning("El producto no está en la lista.");
+            Destroy(instanciaPrefab);
         }
     }
+
+    // Limpiar la lista de prefabs instanciados
+    instantiatedPrefabs.Clear();
+       
+        //ActualizarLista();
+    }
+
+    
 }
 
 
