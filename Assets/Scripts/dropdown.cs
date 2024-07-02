@@ -47,9 +47,9 @@ public class ListaDeCompra : MonoBehaviour
         {
             productoCantidad.Add(producto, cantidadProducto);
         }
-        prefab=Instantiate(prefab, panel.transform);
+            GameObject prefab1 =Instantiate(prefab, panel.transform);
            
-            prefab.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
+            prefab1.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
             instantiatedPrefabs.Add(prefab);
 
         //ActualizarLista();
@@ -91,6 +91,7 @@ public class ListaDeCompra : MonoBehaviour
         foreach (var kvp in productoCantidad)
         {
             PlayerPrefs.SetInt(kvp.Key, kvp.Value);
+            Debug.Log(kvp.Key);
         }
 
         PlayerPrefs.Save();
@@ -114,8 +115,8 @@ public class ListaDeCompra : MonoBehaviour
                 
                 int cantidadProducto = PlayerPrefs.GetInt(producto);
                 productoCantidad[producto] = cantidadProducto;
-                prefab=Instantiate(prefab, panel.transform);
-                prefab.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
+                GameObject prefab2=Instantiate(prefab, panel.transform);
+                prefab2.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
                 instantiatedPrefabs.Add(prefab);
                
             }
@@ -130,6 +131,7 @@ public class ListaDeCompra : MonoBehaviour
         productoCantidad.Clear();
         StaticData.numeroProductos = 4;
         StaticData.numeroDistracciones = 2;
+        StaticData.listaEditor=new Dictionary<string, int>();
 
         foreach (GameObject instanciaPrefab in instantiatedPrefabs)
     {

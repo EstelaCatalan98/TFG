@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 
 public class Eliminar : MonoBehaviour
+
 {
     // Esta función se llamará desde el botón
     public void DeleteParentObject()
@@ -9,6 +10,7 @@ public class Eliminar : MonoBehaviour
         Debug.Log("ksajhfbrkqb");
         // Obtiene el objeto padre
         GameObject parentObject = transform.parent.gameObject;
+        Debug.Log("" + parentObject.name);
 
         // Obtiene el TMP_Text del padre
         TMP_Text tmpTextComponent = parentObject.GetComponentInChildren<TMP_Text>();
@@ -21,6 +23,9 @@ public class Eliminar : MonoBehaviour
             // Parsear el texto para obtener el nombre del producto
             string productName = ParseProductName(text);
             PlayerPrefs.DeleteKey(productName);
+            
+           
+
 
             // Loguea el nombre del producto (opcional)
             Debug.Log("Producto: " + productName);
