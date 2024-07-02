@@ -268,8 +268,9 @@ public class CrearListaCompra : MonoBehaviour
     DisplayMessage("");
     StartCoroutine(ShowMessageTemporarily("Selecciona los productos de la lista.", 3f));
     audioSource = Camera.main.GetComponent<AudioSource>();
-    listaseleccionada = new Dictionary<string, int>(StaticData.listaEditor);
-    nProductos = StaticData.numeroProductos;
+   
+    listaseleccionada = new Dictionary<string, int>();
+    nProductos = PlayerPrefs.GetInt("NumeroProductos",4);//StaticData.numeroProductos;
     Debug.Log("nproductos"+nProductos);
     
     
@@ -281,7 +282,20 @@ public class CrearListaCompra : MonoBehaviour
       Productos.Add(boton.name);
     }
     StaticData.botones = botones;
-    StaticData.productos = Productos;
+    StaticData.productos = Productos;//todos los productos posibles
+
+     foreach (string producto in Productos){
+      Debug.Log("antes del if");
+      if(PlayerPrefs.HasKey(producto)){
+        int cantidadProducto =PlayerPrefs.GetInt(producto);
+        listaseleccionada.Add(producto,cantidadProducto);
+        Debug.Log("Producto:"+producto+"cantidad:"+cantidadProducto);
+
+
+        
+
+      }
+     }
 
 
     if (listaseleccionada.Count == 0)
@@ -289,7 +303,7 @@ public class CrearListaCompra : MonoBehaviour
 
       //cogemos nproductos aleatorios
       listaseleccionada = new Dictionary<string, int>();
-      StaticData.listaEditor = new Dictionary<string, int>();
+      
 
       List<String> listaCompra = GetProductos(Productos, nProductos);
       for (int i = 0; i < listaCompra.Count; i++)

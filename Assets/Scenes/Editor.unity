@@ -385,6 +385,20 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: "Pastilla de jab\xF3n"
       m_Image: {fileID: 0}
+    - m_Text: Sal
+      m_Image: {fileID: 0}
+    - m_Text: Pimienta
+      m_Image: {fileID: 0}
+    - m_Text: Aceite
+      m_Image: {fileID: 0}
+    - m_Text: Vinagre
+      m_Image: {fileID: 0}
+    - m_Text: "Br\xF3coli"
+      m_Image: {fileID: 0}
+    - m_Text: Lechuga
+      m_Image: {fileID: 0}
+    - m_Text: Zanahoria
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -501,7 +515,6 @@ MonoBehaviour:
   cantidad: {fileID: 284835957}
   nproductos: {fileID: 193583766}
   ndistracciones: {fileID: 1516291464}
-  lista: {fileID: 1636956844673681507}
   panel: {fileID: 141326277772001084}
   prefab: {fileID: 3196064326542455517, guid: aa1aba68e4af6aa4e938dcf3e603199b, type: 3}
 --- !u!1 &158285932

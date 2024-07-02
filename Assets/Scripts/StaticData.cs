@@ -12,8 +12,6 @@ public class StaticData : MonoBehaviour
 
     public static int cont;
     public static int numeroProductos=4;
-    public static Dictionary<string, int> listaEditor =
-     new Dictionary<string, int>();
     public static Dictionary<string, int> lista =
    new Dictionary<string, int>();
     public static List<string> productos = new List<string>();

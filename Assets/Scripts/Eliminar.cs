@@ -23,12 +23,8 @@ public class Eliminar : MonoBehaviour
             // Parsear el texto para obtener el nombre del producto
             string productName = ParseProductName(text);
             PlayerPrefs.DeleteKey(productName);
-            
-           
 
-
-            // Loguea el nombre del producto (opcional)
-            Debug.Log("Producto: " + productName);
+            Debug.Log("Producto eliminado : " + productName);
         }
         else
         {
@@ -37,6 +33,7 @@ public class Eliminar : MonoBehaviour
 
         // Destruye el objeto padre
         Destroy(parentObject);
+        PlayerPrefs.Save();
     }
 
     private string ParseProductName(string text)

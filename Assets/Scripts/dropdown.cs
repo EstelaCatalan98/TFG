@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ListaDeCompra : MonoBehaviour
 {
@@ -9,22 +8,17 @@ public class ListaDeCompra : MonoBehaviour
     [SerializeField] private TMP_InputField cantidad;
     [SerializeField] private TMP_InputField nproductos;
     [SerializeField] private TMP_InputField ndistracciones;
-    [SerializeField] private TMP_Text lista;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject prefab;
     private List<GameObject> instantiatedPrefabs = new List<GameObject>();
-   
-
-    private Dictionary<string, int> productoCantidad = new Dictionary<string, int>();
 
     void Start()
     {
-    cantidad.contentType = TMP_InputField.ContentType.IntegerNumber;
-    nproductos.contentType = TMP_InputField.ContentType.IntegerNumber;
-    ndistracciones.contentType = TMP_InputField.ContentType.IntegerNumber;
-        
+        cantidad.contentType = TMP_InputField.ContentType.IntegerNumber;
+        nproductos.contentType = TMP_InputField.ContentType.IntegerNumber;
+        ndistracciones.contentType = TMP_InputField.ContentType.IntegerNumber;
+
         CargarDatos();
-        //ActualizarLista();
     }
 
     public void Agregar()
@@ -38,28 +32,18 @@ public class ListaDeCompra : MonoBehaviour
             return;
         }
 
-        if (productoCantidad.ContainsKey(producto))
-        {
-            Debug.LogWarning("El producto ya está en la lista. Actualizando cantidad.");
-            productoCantidad[producto] += cantidadProducto;
-        }
-        else
-        {
-            productoCantidad.Add(producto, cantidadProducto);
-        }
-            GameObject prefab1 =Instantiate(prefab, panel.transform);
-           
-            prefab1.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
-            instantiatedPrefabs.Add(prefab);
+        int cantidadActual = PlayerPrefs.GetInt(producto, 0);
+        PlayerPrefs.SetInt(producto, cantidadActual + cantidadProducto);
 
-        //ActualizarLista();
+        GameObject prefab1 = Instantiate(prefab, panel.transform);
+        prefab1.GetComponentInChildren<TMP_Text>().text = producto + " x" + (cantidadActual + cantidadProducto);
+        instantiatedPrefabs.Add(prefab1);
+
+        PlayerPrefs.Save();
     }
-
-   
 
     public void guardar()
     {
-        // Verificar si la entrada de nproductos es un entero válido
         if (!int.TryParse(nproductos.text, out int numProductos))
         {
             Debug.LogError("Número de productos no válido.");
@@ -71,83 +55,50 @@ public class ListaDeCompra : MonoBehaviour
             return;
         }
 
-         StaticData.listaEditor = productoCantidad;
-        StaticData.numeroProductos = numProductos;
-        StaticData.numeroDistracciones = numDistracciones;
-        Debug.Log(StaticData.numeroProductos);
-        Debug.Log(StaticData.numeroDistracciones);
+       
 
-        GuardarDatos();
-        Debug.Log("Datos guardados: númeroProductos y númeroDistracciones.");
-    }
-
-    private void GuardarDatos()
-    {
-        // Guardar la cantidad de productos y distracciones en PlayerPrefs
-        PlayerPrefs.SetInt("NumeroProductos", StaticData.numeroProductos);
-        PlayerPrefs.SetInt("NumeroDistracciones", StaticData.numeroDistracciones);
-
-        // Guardar la lista de productos y cantidades
-        foreach (var kvp in productoCantidad)
-        {
-            PlayerPrefs.SetInt(kvp.Key, kvp.Value);
-            Debug.Log(kvp.Key);
-        }
+        PlayerPrefs.SetInt("NumeroProductos", numProductos);
+        PlayerPrefs.SetInt("NumeroDistracciones", numDistracciones);
 
         PlayerPrefs.Save();
+
+        Debug.Log("Datos guardados: númeroProductos y númeroDistracciones.");
     }
 
     private void CargarDatos()
     {
-        // Cargar la cantidad de productos y distracciones de PlayerPrefs
-        StaticData.numeroProductos = PlayerPrefs.GetInt("NumeroProductos", 4);
-        StaticData.numeroDistracciones = PlayerPrefs.GetInt("NumeroDistracciones", 2);
+       
+        nproductos.text = PlayerPrefs.GetInt("NumeroProductos", 5).ToString();
+        ndistracciones.text = PlayerPrefs.GetInt("NumeroDistracciones", 6).ToString();
 
-        nproductos.text = StaticData.numeroProductos.ToString();
-        ndistracciones.text = StaticData.numeroDistracciones.ToString();
-
-        // Cargar la lista de productos y cantidades
         foreach (var option in elegirProducto.options)
         {
             string producto = option.text;
+
             if (PlayerPrefs.HasKey(producto))
             {
-                
                 int cantidadProducto = PlayerPrefs.GetInt(producto);
-                productoCantidad[producto] = cantidadProducto;
-                GameObject prefab2=Instantiate(prefab, panel.transform);
-                prefab2.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto + "  ";
-                instantiatedPrefabs.Add(prefab);
-               
+                GameObject prefab2 = Instantiate(prefab, panel.transform);
+                prefab2.GetComponentInChildren<TMP_Text>().text = producto + " x" + cantidadProducto;
+                instantiatedPrefabs.Add(prefab2);
             }
-            
         }
     }
 
     public void ResetearDatos()
     {
-        // Limpiar PlayerPrefs
         PlayerPrefs.DeleteAll();
-        productoCantidad.Clear();
-        StaticData.numeroProductos = 4;
-        StaticData.numeroDistracciones = 2;
-        StaticData.listaEditor=new Dictionary<string, int>();
+
+     
 
         foreach (GameObject instanciaPrefab in instantiatedPrefabs)
-    {
-        if (instanciaPrefab != null)
         {
-            Destroy(instanciaPrefab);
+            if (instanciaPrefab != null)
+            {
+                Destroy(instanciaPrefab);
+            }
         }
-    }
 
-    // Limpiar la lista de prefabs instanciados
-    instantiatedPrefabs.Clear();
-       
-        //ActualizarLista();
+        instantiatedPrefabs.Clear();
     }
-
-    
 }
-
-
