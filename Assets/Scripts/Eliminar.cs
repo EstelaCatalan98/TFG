@@ -7,10 +7,8 @@ public class Eliminar : MonoBehaviour
     // Esta función se llamará desde el botón
     public void DeleteParentObject()
     {
-        Debug.Log("ksajhfbrkqb");
         // Obtiene el objeto padre
         GameObject parentObject = transform.parent.gameObject;
-        Debug.Log("" + parentObject.name);
 
         // Obtiene el TMP_Text del padre
         TMP_Text tmpTextComponent = parentObject.GetComponentInChildren<TMP_Text>();
@@ -24,7 +22,7 @@ public class Eliminar : MonoBehaviour
             string productName = ParseProductName(text);
             PlayerPrefs.DeleteKey(productName);
 
-            Debug.Log("Producto eliminado : " + productName);
+            
         }
         else
         {

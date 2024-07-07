@@ -57,10 +57,25 @@ public class MostrarEstadisticas : MonoBehaviour
 
     private void LimpiarTabla()
     {
+       
         foreach (Transform child in content)
         {
             Destroy(child.gameObject);
         }
+    }
+    public void borrartabla(){
+        LimpiarTabla();
+         int numPartidas = PlayerPrefs.GetInt("NumeroPartidas", 0);
+        for (int i = 0; i < numPartidas; i++)
+        {
+            
+            PlayerPrefs.DeleteKey($"Partida_{i}_Fecha");
+            PlayerPrefs.DeleteKey($"Partida_{i}_Aciertos");
+             PlayerPrefs.DeleteKey($"Partida_{i}_Fallos");
+            partidas.Clear();
+        }
+        PlayerPrefs.DeleteKey("NumeroPartidas");
+        
     }
 }
 

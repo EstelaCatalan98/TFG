@@ -10,7 +10,7 @@ public class OcultarProductos : MonoBehaviour
 
     void Start()
     {
-        cantidadBotonesAleatorios=PlayerPrefs.GetInt("NumeroDistracciones", 2);//StaticData.numeroDistracciones;
+        cantidadBotonesAleatorios=PlayerPrefs.GetInt("NumeroDistracciones", 6);//StaticData.numeroDistracciones;
         Debug.Log("numero de distracciones:"+cantidadBotonesAleatorios);
         Debug.Log("numero de distracciones static data :"+StaticData.numeroDistracciones);
         foreach (Button boton in botones){

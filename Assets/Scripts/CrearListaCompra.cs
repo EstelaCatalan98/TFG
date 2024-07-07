@@ -14,11 +14,13 @@ using System.Drawing;
 
 public class CrearListaCompra : MonoBehaviour
 {
-  [SerializeField]private Image xImage; // La imagen de "X" que vamos a superponer
-  [SerializeField]private Camera mainCamera;
+  [SerializeField] private Image xImage; // La imagen de "X" que vamos a superponer
+  [SerializeField] private Camera mainCamera;
   List<string> Productos = new List<string>();
   Dictionary<string, int> listaseleccionada;
   int nProductos;
+  [SerializeField] GameObject cartelPrefab;
+  [SerializeField] GameObject panel;
   public TextMeshProUGUI lista;
   public TextMeshProUGUI textoAviso;
   public Button[] botones; // Array de botones  
@@ -26,8 +28,8 @@ public class CrearListaCompra : MonoBehaviour
   public TextMeshProUGUI messageText; // Texto de mensaje en la UI
   public AudioClip successSound; // Sonido de éxito
   public AudioClip softBellSound; // Sonido error
-  int contFallos=0;
-  int contAciertos=0;
+  int contFallos = 0;
+  int contAciertos = 0;
 
   public Image backgroundImage;
 
@@ -52,7 +54,7 @@ public class CrearListaCompra : MonoBehaviour
 
   public void seleccionarProducto(string productoSeleccionado)
   {
-    
+
     // Divide el texto en líneas, eliminando posibles espacios en blanco alrededor
     string[] lines = StaticData.listaDef.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
     string newText = "";
@@ -72,7 +74,7 @@ public class CrearListaCompra : MonoBehaviour
         {
           productoEncontrado = true; // Marcar que el producto ha sido encontrado en la lista
           PlaySound(successSound);
-          contAciertos ++;
+          contAciertos++;
 
           string numberPart = parts[1].Trim();
 
@@ -146,7 +148,7 @@ public class CrearListaCompra : MonoBehaviour
       StartCoroutine(ShowMessageTemporarily("Casi lo logras, inténtalo nuevamente.", 3f));
       Debug.Log("El producto seleccionado no se encuentra en la lista.");
       contFallos++;
-      
+
 
     }
 
@@ -161,10 +163,10 @@ public class CrearListaCompra : MonoBehaviour
 
   void MostrarVentanaFinal()
   {
-   
+
     Debug.Log("¡Fin del juego! Todos los productos han sido agotados o tachados.");
     EndGame();
-   
+
   }
 
 
@@ -263,17 +265,24 @@ public class CrearListaCompra : MonoBehaviour
 
   void Awake()
   {
-    if(PlayerPrefs.HasKey("musicvolume")){
-    AudioListener.volume=PlayerPrefs.GetFloat("musicvolume");}
+
+    if (PlayerPrefs.HasKey("musicvolume"))
+    {
+      AudioListener.volume = PlayerPrefs.GetFloat("musicvolume");
+    }
     DisplayMessage("");
-    StartCoroutine(ShowMessageTemporarily("Selecciona los productos de la lista.", 3f));
+    StartCoroutine(ShowMessageTemporarily("", 0f));
+    // Instanciar el cartel si aún no se ha instanciado
+    cartelPrefab = Instantiate(cartelPrefab, panel.transform);
+    // Activar el cartel si ya está instanciado
+    cartelPrefab.SetActive(true);
     audioSource = Camera.main.GetComponent<AudioSource>();
-   
+
     listaseleccionada = new Dictionary<string, int>();
-    nProductos = PlayerPrefs.GetInt("NumeroProductos",4);//StaticData.numeroProductos;
-    Debug.Log("nproductos"+nProductos);
-    
-    
+    nProductos = PlayerPrefs.GetInt("NumeroProductos", 5);//StaticData.numeroProductos;
+    Debug.Log("nproductos" + nProductos);
+
+
     string texto = "";
     Productos.Clear();
     foreach (Button boton in botones)
@@ -284,18 +293,20 @@ public class CrearListaCompra : MonoBehaviour
     StaticData.botones = botones;
     StaticData.productos = Productos;//todos los productos posibles
 
-     foreach (string producto in Productos){
+    foreach (string producto in Productos)
+    {
       Debug.Log("antes del if");
-      if(PlayerPrefs.HasKey(producto)){
-        int cantidadProducto =PlayerPrefs.GetInt(producto);
-        listaseleccionada.Add(producto,cantidadProducto);
-        Debug.Log("Producto:"+producto+"cantidad:"+cantidadProducto);
+      if (PlayerPrefs.HasKey(producto))
+      {
+        int cantidadProducto = PlayerPrefs.GetInt(producto);
+        listaseleccionada.Add(producto, cantidadProducto);
+        Debug.Log("Producto:" + producto + "cantidad:" + cantidadProducto);
 
 
-        
+
 
       }
-     }
+    }
 
 
     if (listaseleccionada.Count == 0)
@@ -303,7 +314,7 @@ public class CrearListaCompra : MonoBehaviour
 
       //cogemos nproductos aleatorios
       listaseleccionada = new Dictionary<string, int>();
-      
+
 
       List<String> listaCompra = GetProductos(Productos, nProductos);
       for (int i = 0; i < listaCompra.Count; i++)
@@ -345,28 +356,28 @@ public class CrearListaCompra : MonoBehaviour
 
   }
   public void GuardarPartida()
-{
+  {
     PlayerPrefs.SetInt("Aciertos", contAciertos);
     PlayerPrefs.SetInt("Fallos", contFallos);
-    RegistrarPartida(contAciertos,contFallos);
+    RegistrarPartida(contAciertos, contFallos);
 
     //PlayerPrefs.Save();
 
-    
-}
- public void RegistrarPartida( int aciertos, int fallos)
-    {
-        int numPartidas = PlayerPrefs.GetInt("NumeroPartidas", 0);
 
-        PlayerPrefs.SetString($"Partida_{numPartidas}_Fecha", DateTime.Now.ToString());
-        PlayerPrefs.SetInt($"Partida_{numPartidas}_Aciertos", aciertos);
-        PlayerPrefs.SetInt($"Partida_{numPartidas}_Fallos", fallos);
+  }
+  public void RegistrarPartida(int aciertos, int fallos)
+  {
+    int numPartidas = PlayerPrefs.GetInt("NumeroPartidas", 0);
 
-        numPartidas++;
-        PlayerPrefs.SetInt("NumeroPartidas", numPartidas);
+    PlayerPrefs.SetString($"Partida_{numPartidas}_Fecha", DateTime.Now.ToString());
+    PlayerPrefs.SetInt($"Partida_{numPartidas}_Aciertos", aciertos);
+    PlayerPrefs.SetInt($"Partida_{numPartidas}_Fallos", fallos);
 
-        PlayerPrefs.Save();
-    }
+    numPartidas++;
+    PlayerPrefs.SetInt("NumeroPartidas", numPartidas);
+
+    PlayerPrefs.Save();
+  }
 
 
 

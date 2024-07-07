@@ -409,7 +409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5193929386879353154, guid: dd1f34c6bb61a3f4b9232becf343887b, type: 3}
       propertyPath: m_text
-      value: "Men\xFA principal"
+      value: Menu principal
       objectReference: {fileID: 0}
     - target: {fileID: 5193929386879353154, guid: dd1f34c6bb61a3f4b9232becf343887b, type: 3}
       propertyPath: m_fontSize
@@ -642,7 +642,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Estad\xEDsticas de Todas las Partidas\n"
+  m_text: 'Estadisticas de Todas las Partidas
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f79af4a781f0e1e42818625632a014a4, type: 2}
   m_sharedMaterial: {fileID: 3305218246460263294, guid: f79af4a781f0e1e42818625632a014a4, type: 2}
