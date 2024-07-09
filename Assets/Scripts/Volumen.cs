@@ -22,13 +22,13 @@ public class Volumen : MonoBehaviour
         {
             float savedVolume = PlayerPrefs.GetFloat("musicvolume");
             slider.value = savedVolume;
-            AudioListener.volume = savedVolume; // Asegúrate de que el volumen del AudioListener se actualice también
+            AudioListener.volume = savedVolume; 
         }
     }
 
     public void Save()
     {
         PlayerPrefs.SetFloat("musicvolume", slider.value);
-        PlayerPrefs.Save(); // Asegúrate de guardar los PlayerPrefs inmediatamente
+        PlayerPrefs.Save(); 
     }
 }

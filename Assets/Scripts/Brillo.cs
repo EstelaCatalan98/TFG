@@ -17,14 +17,14 @@ public class Brillo : MonoBehaviour
        
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
         
     }
     public void ChangeSlider(float valor){
         slider.value=valor;
-        //PlayerPrefs.SetFloat("brillo",sliderValue);
+        
         panelBrillo.color=new Color(panelBrillo.color.r,panelBrillo.color.g,panelBrillo.color.b,slider.value);   
     }
     public void Save(){

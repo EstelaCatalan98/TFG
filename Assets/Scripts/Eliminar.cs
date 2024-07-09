@@ -2,9 +2,21 @@ using TMPro;
 using UnityEngine;
 
 public class Eliminar : MonoBehaviour
-
 {
-    // Esta función se llamará desde el botón
+    private ListaDeCompra listaDeCompra;
+
+    void Start()
+    {
+        // Encuentra el script ListaDeCompra en la escena
+        listaDeCompra = FindObjectOfType<ListaDeCompra>();
+
+        if (listaDeCompra == null)
+        {
+            Debug.LogError("No se encontró un componente ListaDeCompra en la escena.");
+        }
+    }
+
+    
     public void DeleteParentObject()
     {
         // Obtiene el objeto padre
@@ -21,16 +33,24 @@ public class Eliminar : MonoBehaviour
             // Parsear el texto para obtener el nombre del producto
             string productName = ParseProductName(text);
             PlayerPrefs.DeleteKey(productName);
-
-            
         }
         else
         {
             Debug.LogError("No se encontró un componente TMP_Text en el objeto padre.");
         }
 
-        // Destruye el objeto padre
-        Destroy(parentObject);
+        // Notifica a ListaDeCompra para eliminar el prefab y actualizar la lista
+        if (listaDeCompra != null)
+        {
+            listaDeCompra.EliminarProducto(parentObject);
+        }
+        else
+        {
+            Debug.LogError("No se ha encontrado una referencia a ListaDeCompra.");
+            // Destruye el objeto padre
+            Destroy(parentObject);
+        }
+
         PlayerPrefs.Save();
     }
 
@@ -49,5 +69,7 @@ public class Eliminar : MonoBehaviour
         return parts[0].Trim();
     }
 }
+
+
 
 

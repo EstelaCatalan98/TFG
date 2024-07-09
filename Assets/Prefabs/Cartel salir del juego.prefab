@@ -161,9 +161,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1932340726737150078}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15886648, y: 0.54757, z: 0.54757}
+  m_LocalScale: {x: 0.1588665, y: 0.54757, z: 0.54757}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3507115291026637517}
@@ -171,7 +171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.3, y: -33.7}
+  m_AnchoredPosition: {x: -26.299988, y: -33.699997}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9169266273663007569
@@ -581,14 +581,14 @@ RectTransform:
   m_LocalScale: {x: 13.811554, y: 5.4472103, z: 7.7593}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 8713545659185830981}
   - {fileID: 1908792609283107033}
   - {fileID: 6029596948213875496}
-  - {fileID: 8713545659185830981}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 733}
+  m_AnchoredPosition: {x: 960, y: 749}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2957974319090536005
@@ -682,14 +682,14 @@ RectTransform:
   m_GameObject: {fileID: 6651902546139298678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.87273, y: 1.2916404, z: 0.87273}
+  m_LocalScale: {x: 0.87273, y: 1.8987114, z: 0.87273}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1205957757384762294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 11}
+  m_AnchoredPosition: {x: 1.2, y: -7}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &798685598294403022
@@ -747,8 +747,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 7
+  m_fontSizeBase: 7
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -783,7 +783,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 44.390797, y: 0, z: 47.186485, w: 22.873613}
+  m_margin: {x: 44.390797, y: 0, z: 47.186485, w: 33.14546}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

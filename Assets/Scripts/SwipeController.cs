@@ -14,8 +14,8 @@ public class SwipeController : MonoBehaviour
     [SerializeField] LeanTweenType tweenType;
     private bool isTweening;
     
-    [SerializeField] Button nextButton;  // Reference to the "Next" button
-    [SerializeField] Button prevButton;  // Reference to the "Previous" button
+    [SerializeField] Button nextButton;  
+    [SerializeField] Button prevButton;  
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class SwipeController : MonoBehaviour
             MovePage();
             Debug.Log("Next Page: " + currentPage);
             Debug.Log("Target Position after Next: " + targetPos);
-            UpdateButtonVisibility();  // Update button visibility
+            UpdateButtonVisibility();  
         }
         else
         {
@@ -57,7 +57,7 @@ public class SwipeController : MonoBehaviour
             MovePage();
             Debug.Log("Previous Page: " + currentPage);
             Debug.Log("Target Position after Previous: " + targetPos);
-            UpdateButtonVisibility();  // Update button visibility
+            UpdateButtonVisibility();  
         }
         else
         {
@@ -77,13 +77,12 @@ public class SwipeController : MonoBehaviour
 
     void UpdateButtonVisibility()
     {
-        // Hide the previous button if on the first page, otherwise show it
         if (prevButton != null)
         {
             prevButton.gameObject.SetActive(currentPage > 1);
         }
 
-        // Hide the next button if on the last page, otherwise show it
+        
         if (nextButton != null)
         {
             nextButton.gameObject.SetActive(currentPage < maxPage);

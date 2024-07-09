@@ -31,8 +31,7 @@ public class MostrarEstadisticas : MonoBehaviour
     {
         partidas.Clear();
 
-        // Aquí debes cargar las partidas guardadas desde PlayerPrefs u otra fuente de datos
-        // Por ejemplo, cargarlas desde PlayerPrefs en este caso
+       
         int numPartidas = PlayerPrefs.GetInt("NumeroPartidas", 0);
         for (int i = 0; i < numPartidas; i++)
         {

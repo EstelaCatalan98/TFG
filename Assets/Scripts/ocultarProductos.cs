@@ -10,14 +10,14 @@ public class OcultarProductos : MonoBehaviour
 
     void Start()
     {
-        cantidadBotonesAleatorios=PlayerPrefs.GetInt("NumeroDistracciones", 6);//StaticData.numeroDistracciones;
+        cantidadBotonesAleatorios=PlayerPrefs.GetInt("NumeroDistracciones", 6);
         Debug.Log("numero de distracciones:"+cantidadBotonesAleatorios);
         Debug.Log("numero de distracciones static data :"+StaticData.numeroDistracciones);
         foreach (Button boton in botones){
             Debug.Log(boton.gameObject);
 
         }
-        botones=StaticData.botones;//aqui estan todos los productos(botones)
+        botones=StaticData.botones;// productos(botones)
         OcultarBotones(); // Ocultar todos los botones al inicio del juego
         MostrarBotonesAleatorios(); // Mostrar botones aleatorios después de ocultar todos
     }
@@ -77,7 +77,7 @@ public class OcultarProductos : MonoBehaviour
             }
             else
             {
-                break; // Si ya no quedan botones para elegir, salir del bucle
+                break; 
             }
         }
     }

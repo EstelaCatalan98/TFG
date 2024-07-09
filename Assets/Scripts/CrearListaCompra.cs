@@ -14,7 +14,7 @@ using System.Drawing;
 
 public class CrearListaCompra : MonoBehaviour
 {
-  [SerializeField] private Image xImage; // La imagen de "X" que vamos a superponer
+  [SerializeField] private Image xImage; 
   [SerializeField] private Camera mainCamera;
   List<string> Productos = new List<string>();
   Dictionary<string, int> listaseleccionada;
@@ -236,7 +236,6 @@ public class CrearListaCompra : MonoBehaviour
     {
       if (boton.name == nombreBoton)
       {
-        // Obtener el componente de Image adicional (la imagen de "X")
         Image[] imagenes = boton.GetComponentsInChildren<Image>();
         Image imagenX = null;
         foreach (var img in imagenes)
@@ -250,7 +249,6 @@ public class CrearListaCompra : MonoBehaviour
 
         if (imagenX != null)
         {
-          // Superponer la imagen de "X"
           imagenX.enabled = true;
         }
 
@@ -279,7 +277,7 @@ public class CrearListaCompra : MonoBehaviour
     audioSource = Camera.main.GetComponent<AudioSource>();
 
     listaseleccionada = new Dictionary<string, int>();
-    nProductos = PlayerPrefs.GetInt("NumeroProductos", 5);//StaticData.numeroProductos;
+    nProductos = PlayerPrefs.GetInt("NumeroProductos", 5);
     Debug.Log("nproductos" + nProductos);
 
 
@@ -361,7 +359,7 @@ public class CrearListaCompra : MonoBehaviour
     PlayerPrefs.SetInt("Fallos", contFallos);
     RegistrarPartida(contAciertos, contFallos);
 
-    //PlayerPrefs.Save();
+    
 
 
   }
