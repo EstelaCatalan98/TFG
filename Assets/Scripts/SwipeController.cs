@@ -35,14 +35,10 @@ public class SwipeController : MonoBehaviour
             currentPage++;
             targetPos += pageStep;
             MovePage();
-            Debug.Log("Next Page: " + currentPage);
-            Debug.Log("Target Position after Next: " + targetPos);
+           
             UpdateButtonVisibility();  
         }
-        else
-        {
-            Debug.Log("Already at maxPage");
-        }
+        
     }
 
     public void Previous()
@@ -55,23 +51,21 @@ public class SwipeController : MonoBehaviour
             currentPage--;
             targetPos -= pageStep;
             MovePage();
-            Debug.Log("Previous Page: " + currentPage);
-            Debug.Log("Target Position after Previous: " + targetPos);
+       
             UpdateButtonVisibility();  
         }
         else
         {
-            Debug.Log("Already at first page");
+           
         }
     }
 
     void MovePage()
     {
-        Debug.Log("Start MovePage to Position: " + targetPos);
         LeanTween.moveLocal(levelPagesRect.gameObject, targetPos, tweenTime).setEase(tweenType).setOnComplete(() =>
         {
             isTweening = false;
-            Debug.Log("MovePage complete. Current Position: " + levelPagesRect.localPosition);
+            
         });
     }
 

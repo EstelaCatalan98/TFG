@@ -183,7 +183,7 @@ public class CrearListaCompra : MonoBehaviour
   {
     if (string.IsNullOrEmpty(message))
     {
-      Debug.Log(message);
+      
       // Oculta el fondo y el texto si no hay mensaje
       messageText.gameObject.SetActive(false);
       backgroundImage.gameObject.SetActive(false);
@@ -293,7 +293,7 @@ public class CrearListaCompra : MonoBehaviour
 
     foreach (string producto in Productos)
     {
-      Debug.Log("antes del if");
+     
       if (PlayerPrefs.HasKey(producto))
       {
         int cantidadProducto = PlayerPrefs.GetInt(producto);

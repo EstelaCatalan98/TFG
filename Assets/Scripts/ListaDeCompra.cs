@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;  
 
 public class ListaDeCompra : MonoBehaviour
 {
@@ -12,14 +13,15 @@ public class ListaDeCompra : MonoBehaviour
     [SerializeField] private TMP_InputField ndistracciones;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject prefab;
-    [SerializeField] private GameObject mensajeError; 
-    [SerializeField] private TMP_Text mensajeErrorText;  
+    [SerializeField] private GameObject mensajeError;
+    [SerializeField] private TMP_Text mensajeErrorText;
+    [SerializeField] private Button agregarButton;  
 
     private List<GameObject> instantiatedPrefabs = new List<GameObject>();
 
     private const int MAX_PRODUCTOS = 12;
     private const int MAX_CANTIDAD = 10;
-    private const float ERROR_MESSAGE_DURATION = 3f; 
+    private const float ERROR_MESSAGE_DURATION = 3f;
 
     void Start()
     {
@@ -42,13 +44,19 @@ public class ListaDeCompra : MonoBehaviour
 
         if (!int.TryParse(cantidad.text, out cantidadProducto) || cantidadProducto <= 0)
         {
-            MostrarMensajeErrorTemporal("Cantidad no válida. Debe ser un número mayor que 0.");
+            MostrarMensajeErrorTemporal("Cantidad no valida. Debe ser un número mayor que 0.");
             return;
         }
 
         int cantidadActual = PlayerPrefs.GetInt(producto, 0);
+        int totalProductos = PlayerPrefs.GetInt("NumeroProductos", 0) + instantiatedPrefabs.Count;
 
-        
+        if (totalProductos > MAX_PRODUCTOS)
+        {
+            MostrarMensajeErrorTemporal("Se ha alcanzado el numero maximo de productos permitido (" + MAX_PRODUCTOS + ").");
+            return;
+        }
+
         if (cantidadActual + cantidadProducto > MAX_CANTIDAD)
         {
             MostrarMensajeErrorTemporal("La cantidad total del producto no puede ser mayor que " + MAX_CANTIDAD + ".");
@@ -84,14 +92,14 @@ public class ListaDeCompra : MonoBehaviour
 
     public void guardar()
     {
-        if (!int.TryParse(nproductos.text, out int numProductos) || numProductos <= 0)
+        if (!int.TryParse(nproductos.text, out int numProductos) || numProductos < 0)
         {
-            MostrarMensajeErrorTemporal("Número de productos no válido. Debe ser un número mayor que 0.");
+            MostrarMensajeErrorTemporal("Numero de productos no valido. Debe ser un numero mayor o igual que 0.");
             return;
         }
-        if (!int.TryParse(ndistracciones.text, out int numDistracciones) || numDistracciones <= 0)
+        if (!int.TryParse(ndistracciones.text, out int numDistracciones) || numDistracciones < 0)
         {
-            MostrarMensajeErrorTemporal("Número de distracciones no válido. Debe ser un número mayor que 0.");
+            MostrarMensajeErrorTemporal("Numero de distracciones no valido. Debe ser un numero mayor o igual que 0.");
             return;
         }
 
@@ -99,7 +107,7 @@ public class ListaDeCompra : MonoBehaviour
 
         if (totalProductos > MAX_PRODUCTOS)
         {
-            MostrarMensajeErrorTemporal("El número total de productos supera el máximo permitido de " + MAX_PRODUCTOS + ".");
+            MostrarMensajeErrorTemporal("El numero total de productos supera el maximo permitido de " + MAX_PRODUCTOS + ".");
             return;
         }
 
@@ -108,9 +116,6 @@ public class ListaDeCompra : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        Debug.Log("Datos guardados: númeroProductos y númeroDistracciones.");
-
-        
         CambiarEscena();
     }
 
@@ -136,6 +141,8 @@ public class ListaDeCompra : MonoBehaviour
                 instantiatedPrefabs.Add(prefab2);
             }
         }
+
+        ValidarNumeroProductos();  
     }
 
     public void ResetearDatos()
@@ -167,14 +174,18 @@ public class ListaDeCompra : MonoBehaviour
         {
             numProductos = 0;
         }
-        
+
         int totalProductos = numProductos + instantiatedPrefabs.Count;
 
         Debug.Log("Total Productos: " + totalProductos + " (NumProductos: " + numProductos + " + Instanciated: " + instantiatedPrefabs.Count + ")");
 
         if (totalProductos > MAX_PRODUCTOS)
         {
-            MostrarMensajeErrorTemporal("El número total de productos supera el máximo permitido de " + MAX_PRODUCTOS + ".");
+            MostrarMensajeErrorTemporal("El numero total de productos supera el maximo permitido de " + MAX_PRODUCTOS + ".");
+            if (agregarButton != null)
+            {
+                agregarButton.interactable = false;
+            }
         }
         else
         {
@@ -182,15 +193,19 @@ public class ListaDeCompra : MonoBehaviour
             {
                 mensajeError.SetActive(false);
             }
+            if (agregarButton != null)
+            {
+                agregarButton.interactable = true;
+            }
         }
     }
 
     private void ValidarNumeroDistracciones()
     {
-        if (!int.TryParse(ndistracciones.text, out int numDistracciones) || numDistracciones <= 0)
+        if (!int.TryParse(ndistracciones.text, out int numDistracciones) || numDistracciones < 0)
         {
-            MostrarMensajeErrorTemporal("Número de distracciones no válido. Debe ser un número mayor que 0.");
-            ndistracciones.text = "1";  // Establece un valor por defecto si el valor ingresado no es válido
+            MostrarMensajeErrorTemporal("Numero de distracciones no valido. Debe ser un número mayor o igual que 0.");
+            ndistracciones.text = "0";  
         }
     }
 
@@ -217,6 +232,8 @@ public class ListaDeCompra : MonoBehaviour
         }
     }
 }
+
+
 
 
 
